@@ -1,0 +1,26 @@
+GET http://localhost:5000/proxi-users/users/
+
+###
+
+GET http://localhost:5000/proxi-users/phoneNumber/%28508%29%20615-7464
+
+###
+
+POST http://localhost:5000/proxi-users/register 
+Content-Type: application/json
+
+{
+    "phoneNumber": "(508) 615-7465"
+}
+
+###
+
+PUT http://localhost:5000/proxi-users/update/%28508%29%20615-7465
+Content-Type: application/json
+
+{
+    "fullName": "Amara Ouattara",
+    "jobTitle": "Software Engineer Intern",
+    "company": "Harvard Business Publishing",
+    "location": "Boston, MA"
+}
