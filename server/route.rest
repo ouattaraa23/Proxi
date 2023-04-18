@@ -10,17 +10,51 @@ POST http://localhost:5000/proxi-users/register
 Content-Type: application/json
 
 {
-    "phoneNumber": "(508) 615-7465"
+    "phoneNumber": "(774) 818-1234"
 }
 
 ###
 
-PUT http://localhost:5000/proxi-users/update/%28508%29%20615-7465
+PUT http://localhost:5000/proxi-users/update/%28774%29%20818-1234
 Content-Type: application/json
 
 {
-    "fullName": "Amara Ouattara",
-    "jobTitle": "Software Engineer Intern",
-    "company": "Harvard Business Publishing",
+    "fullName": "Selwyn George",
+    "jobTitle": "Student",
+    "company": "Northeastern University",
     "location": "Boston, MA"
+}
+
+###
+
+PUT http://localhost:5000/proxi-users/add-pending-connection/%28508%29%20615-7464
+Content-Type: application/json
+
+{
+  "connectionId": "643dcb025f3436f2e0b6466c"
+}
+
+###
+
+GET http://localhost:5000/proxi-users/user/643d38c9f0325122c5b6bf7e
+
+
+###
+
+# Thomas: 643d3e511b8c63707d38ad60, Evan: 643d3e841b8c63707d38ad68, Selwyn: 643d38c9f0325122c5b6bf7e
+
+PUT http://localhost:5000/proxi-users/add-connection/%28508%29%20615-7464
+Content-Type: application/json
+
+{
+  "connectionId": "643d3e841b8c63707d38ad68"
+}
+
+### 
+
+PUT http://localhost:5000/proxi-users/add-skills/%28508%29%20615-7464
+Content-Type: application/json
+
+{
+  "skills": ["JavaScript", "React", "Node.js"]
 }

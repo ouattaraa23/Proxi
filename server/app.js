@@ -6,13 +6,20 @@ const express = require('express');
 const bodyParser = express.json;
 const cors = require('cors');
 const proxiUserRoutes = require("./routes/proxi-users");
+const eventRoutes = require("./routes/events")
 
 // Create the app
 const app = express();
 
-app.use(cors());
+const corsOp = {
+    credentials: true,
+    origin: "*"
+};
+
+app.use(cors(corsOp));
 app.use(bodyParser());
 app.use("/proxi-users/", proxiUserRoutes);
+app.use("/events/", eventRoutes);
 
 module.exports = app;
 
