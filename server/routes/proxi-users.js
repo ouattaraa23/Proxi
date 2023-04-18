@@ -86,6 +86,70 @@ router.put("/add-email/:phoneNumber", getUserByPhoneNumber, async (req, res) => 
   }
 });
 
+// Update a User's Registered EventList
+router.put("/add-registered-event/:phoneNumber", getUserByPhoneNumber, async (req, res) => {
+  
+  const eventId = req.body.eventId;
+
+  if (!eventId) {
+    return res.status(400).json({ message: "Event ID is required" });
+  }
+  if (res.user.registeredEvents.includes(eventId)) {
+    return res.status(400).json({ message: "Event already in list" });
+  }
+
+  res.user.registeredEvents.push(eventId);
+
+  try {
+    const updatedUser = await res.user.save();
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Delete a Registered Event from a User's List
+router.put("/delete-registered-event/:phoneNumber", getUserByPhoneNumber, async (req, res) => {
+  const eventId = req.body.eventId;
+  if (!eventId) {
+    return res.status(400).json({ message: "Event ID is required" });
+  }
+  if (!res.user.registeredEvents.includes(eventId)) {
+    return res.status(400).json({ message: "Event not found" });
+  }
+
+  res.user.registeredEvents = res.user.registeredEvents.filter(id => id.toString() !== eventId);
+
+  try {
+    const updatedUser = await res.user.save();
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Update a User's Past Event List
+router.put("/add-past-event/:phoneNumber", getUserByPhoneNumber, async (req, res) => {
+  
+  const eventId = req.body.eventId;
+
+  if (!eventId) {
+    return res.status(400).json({ message: "Event ID is required" });
+  }
+  if (res.user.pastEvents.includes(eventId)) {
+    return res.status(400).json({ message: "Event already in list" });
+  }
+
+  res.user.pastEvents.push(eventId);
+
+  try {
+    const updatedUser = await res.user.save();
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 // Add a connection to a User
 router.put("/add-connection/:phoneNumber", getUserByPhoneNumber, async (req, res) => {
   const connectionId = req.body.connectionId;

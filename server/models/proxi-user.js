@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const eventUser = require('./event');
+
 const proxiUserSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
@@ -31,6 +33,14 @@ const proxiUserSchema = new mongoose.Schema({
   skills: {
     type: [String],
   },
+  registeredEvents: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'eventUser'
+  },
+  pastEvents: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'eventUser'
+  }
 });
 
 module.exports = mongoose.model("proxi-user", proxiUserSchema);
