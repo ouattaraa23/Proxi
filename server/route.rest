@@ -28,7 +28,6 @@ Content-Type: application/json
     "date": "Apr 21 2023",
     "description": "Visual designers make websites look beautiful. UX/UI designers make them work. Go behind the scenes in this free crash course as we explore the day-to-day of the role, the skills you'll need, and how to launch a career in this lucrative field.\n\nWe'll walk you through how to get the skills to become a top-notch designer yourself and highlight the path to getting those various jobs that will be open to you once you've mastered this skill set.",
     "joinCode": "123456",
-    "attendees": ["643dcb025f3436f2e0b6466c"],
     "imageSource": "https://cdn-az.allevents.in/events5/banners/e5db97533141c27ce07946203474b08ae8a69aa9b37cd289ae54d5a08740f354-rimg-w1200-h675-gmir.jpg?v=1669835614"
 }
 
@@ -59,7 +58,7 @@ PUT http://localhost:5000/proxi-users/add-registered-event/%28508%29%20615-7464
 Content-Type: application/json
 
 {
-  "eventId": "643e189e56f5d5342b0c0c50"
+  "eventId": "643eebcfed3d718ca749d9fe"
 }
 
 ### Delete an event from the registered list
@@ -68,7 +67,7 @@ PUT http://localhost:5000/proxi-users/delete-registered-event/%28508%29%20615-74
 Content-Type: application/json
 
 {
-  "eventId": "643e189e56f5d5342b0c0c50"
+  "eventId": "643eebcfed3d718ca749d9fe"
 }
 
 ### Add an event to the past events list
