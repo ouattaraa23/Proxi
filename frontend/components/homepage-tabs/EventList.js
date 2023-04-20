@@ -6,7 +6,6 @@ import {
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
-  Button,
   Modal,
   TouchableOpacity,
   Pressable,
@@ -171,7 +170,12 @@ const EventList = ({ navigation, phoneNumber }) => {
             />
           ))}
         </ScrollView>
-        <Button title="Add Event" onPress={handleAddEvent} />
+        <TouchableOpacity
+          style={[styles.confirmButton]}
+          onPress={handleAddEvent}
+        >
+          <Text style={styles.confirmButtonText}>Add Event</Text>
+        </TouchableOpacity>
 
         <Modal
           animationType="slide"
@@ -182,23 +186,33 @@ const EventList = ({ navigation, phoneNumber }) => {
             setJoinCode("");
           }}
         >
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Enter Join Code:</Text>
-            <TextInput
-              style={styles.modalTextInput}
-              placeholder="Join Code"
-              keyboardType="numeric"
-              maxLength={6}
-              value={joinCode}
-              onChangeText={setJoinCode}
-            />
-            <Pressable
-              style={[styles.modalButton, styles.modalButtonClose]}
-              onPress={handleJoinCodeSubmit}
-            >
-              <Text style={styles.textStyle}>Submit</Text>
-            </Pressable>
-          </View>
+          <Pressable
+            style={styles.modalBackground}
+            onPress={() => {
+              setModalVisible(false);
+              setJoinCode("");
+            }}
+          >
+            <View style={styles.modalCenteredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Enter Join Code:</Text>
+                <TextInput
+                  style={styles.modalTextInput}
+                  placeholder="Join Code"
+                  keyboardType="numeric"
+                  maxLength={6}
+                  value={joinCode}
+                  onChangeText={setJoinCode}
+                />
+                <Pressable
+                  style={[styles.modalButton, styles.modalButtonClose]}
+                  onPress={handleJoinCodeSubmit}
+                >
+                  <Text style={styles.textStyle}>Submit</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Pressable>
         </Modal>
       </View>
     </TouchableWithoutFeedback>
@@ -282,6 +296,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 15,
     width: 200,
+    textAlign: "center",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalCenteredView: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    bottom: 250,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  confirmButton: {
+    backgroundColor: "#FD5252",
+    borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 36,
+  },
+  confirmButtonText: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    fontSize: 22,
     textAlign: "center",
   },
 });
