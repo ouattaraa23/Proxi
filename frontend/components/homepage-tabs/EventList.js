@@ -9,20 +9,27 @@ import {
   Button,
   Modal,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { ScrollView } from "react-native";
 import axios from "axios";
 import SearchButtonGroup from "./tab-components/SearchButtonGroup";
 import EventCard from "./tab-components/EventCard";
+import { useFocusEffect } from "@react-navigation/native";
 
 const EventList = ({ navigation, phoneNumber }) => {
   const [searchInput, setSearchInput] = useState("");
   const [user, setUser] = useState({});
   const [events, setEvents] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
+  const [eventsUpdated, setEventsUpdated] = useState(false);
+
+  const [joinCode, setJoinCode] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const encodedNumber = encodeURIComponent(phoneNumber);
 
   useEffect(() => {
-    const encodedNumber = encodeURIComponent(phoneNumber);
-
     axios
       .get(`http://10.110.153.30:5000/proxi-users/phoneNumber/${encodedNumber}`)
       .then((response) => {
@@ -32,7 +39,34 @@ const EventList = ({ navigation, phoneNumber }) => {
       .catch((error) => {
         console.error(error);
       });
-  }, [phoneNumber]);
+
+    fetchAllEvents();
+    // Reset eventsUpdated to false
+    if (eventsUpdated) {
+      setEventsUpdated(false);
+    }
+  }, [phoneNumber, eventsUpdated]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(
+          `http://10.110.153.30:5000/proxi-users/phoneNumber/${encodedNumber}`
+        )
+        .then((response) => {
+          setUser(response.data);
+          fetchRegisteredEventDetails(response.data.registeredEvents);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      fetchAllEvents();
+      // Reset eventsUpdated to false
+      if (eventsUpdated) {
+        setEventsUpdated(false);
+      }
+    }, [])
+  );
 
   if (!user) {
     return (
@@ -41,6 +75,17 @@ const EventList = ({ navigation, phoneNumber }) => {
       </View>
     );
   }
+
+  const fetchAllEvents = async () => {
+    try {
+      const response = await axios.get(
+        "http://10.110.153.30:5000/events/all-events"
+      );
+      setAllEvents(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const fetchRegisteredEventDetails = async (eventArray) => {
     const fetchedDetails = await Promise.all(
@@ -58,6 +103,39 @@ const EventList = ({ navigation, phoneNumber }) => {
     navigation.navigate("EventInfo", {
       event,
     });
+  };
+
+  const handleAddEvent = () => {
+    setModalVisible(true);
+  };
+
+  const handleJoinCodeSubmit = async () => {
+    setModalVisible(false);
+
+    try {
+      // Get the event with the matching join code
+      const response = await axios.get(
+        `http://10.110.153.30:5000/events/join-code/${joinCode}`
+      );
+      const event = response.data;
+
+      if (!event) {
+        // Handle event not found case
+        return;
+      }
+
+      const encodedNumber = encodeURIComponent(phoneNumber);
+
+      await axios.put(
+        `http://10.110.153.30:5000/proxi-users/add-registered-event/${encodedNumber}/${event._id}`
+      );
+
+      // Set eventsUpdated to true to trigger useEffect
+      setEventsUpdated(true);
+      setJoinCode("");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -93,6 +171,35 @@ const EventList = ({ navigation, phoneNumber }) => {
             />
           ))}
         </ScrollView>
+        <Button title="Add Event" onPress={handleAddEvent} />
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(false);
+            setJoinCode("");
+          }}
+        >
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Enter Join Code:</Text>
+            <TextInput
+              style={styles.modalTextInput}
+              placeholder="Join Code"
+              keyboardType="numeric"
+              maxLength={6}
+              value={joinCode}
+              onChangeText={setJoinCode}
+            />
+            <Pressable
+              style={[styles.modalButton, styles.modalButtonClose]}
+              onPress={handleJoinCodeSubmit}
+            >
+              <Text style={styles.textStyle}>Submit</Text>
+            </Pressable>
+          </View>
+        </Modal>
       </View>
     </TouchableWithoutFeedback>
   );

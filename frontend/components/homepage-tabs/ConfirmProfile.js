@@ -13,12 +13,9 @@ import {
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
-const ConfirmProfile = ({ navigation, phoneNumber }) => {
+const ConfirmProfile = ({ navigation, phoneNumber, route }) => {
+  const { event } = route.params;
   const [user, setUser] = useState(null);
-
-  const handleSave = () => {
-    navigation.navigate("EventList");
-  };
 
   useEffect(() => {
     const encodedNumber = encodeURIComponent(phoneNumber);
@@ -40,6 +37,10 @@ const ConfirmProfile = ({ navigation, phoneNumber }) => {
       </View>
     );
   }
+
+  const handleSave = () => {
+    navigation.navigate("EventJoined", { event });
+  };
 
   const { fullName, jobTitle, company, location, skills } = user;
 

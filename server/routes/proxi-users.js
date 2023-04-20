@@ -86,27 +86,24 @@ router.put("/add-email/:phoneNumber", getUserByPhoneNumber, async (req, res) => 
   }
 });
 
-// Update a User's Registered EventList
-router.put("/add-registered-event/:phoneNumber", getUserByPhoneNumber, async (req, res) => {
-  
-  const eventId = req.body.eventId;
-
-  if (!eventId) {
-    return res.status(400).json({ message: "Event ID is required" });
-  }
-  if (res.user.registeredEvents.includes(eventId)) {
-    return res.status(400).json({ message: "Event already in list" });
-  }
-
-  res.user.registeredEvents.push(eventId);
-
+// Add registered event to a user using phone number
+router.put("/add-registered-event/:phoneNumber/:eventId", getUserByPhoneNumber, async (req, res) => {
   try {
-    const updatedUser = await res.user.save();
+    const user = res.user;
+
+    if (user.registeredEvents.includes(req.params.eventId)) {
+      res.status(400).json({ message: "Event already added to the user's registered events" });
+      return;
+    }
+
+    user.registeredEvents.push(req.params.eventId);
+    const updatedUser = await user.save();
     res.json(updatedUser);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
+
 
 // Delete a Registered Event from a User's List
 router.put("/delete-registered-event/:phoneNumber", getUserByPhoneNumber, async (req, res) => {

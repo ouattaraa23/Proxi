@@ -9,16 +9,35 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import axios from "axios";
 
-const EventInfoScreen = ({ navigation, route }) => {
+const EventJoined = ({ navigation, phoneNumber, route }) => {
   const { event } = route.params;
 
   const imageWidth = Dimensions.get("window").width;
   const imageHeight = Dimensions.get("window").height / 3;
+  const encodedNumber = encodeURIComponent(phoneNumber);
 
-  const handleConfirm = () => {
-    navigation.navigate('ConfirmProfile', { event });
-  }
+  const handleConfirm = async () => {
+    try {
+      // Delete the event from the registeredEvents list
+      await axios.put(
+        `http://10.110.153.30:5000/proxi-users/delete-registered-event/${encodedNumber}`,
+        { eventId: event._id }
+      );
+  
+      // Add the event to the pastEvents list
+      await axios.put(
+        `http://10.110.153.30:5000/proxi-users/add-past-event/${encodedNumber}`,
+        { eventId: event._id }
+      );
+  
+      // Navigate back to the EventList screen
+      navigation.navigate("EventList");
+    } catch (error) {
+      console.error("Error updating event lists:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -49,11 +68,11 @@ const EventInfoScreen = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.descriptionContainer}>
-        <Text style={styles.subTitle}>Overview</Text>
-        <Text style={styles.description}>{event.description}</Text>
+        <Text style={styles.subTitle}>Welcome To The Event!!</Text>
+        <Text style={styles.description}>Once you leave the event you cannot join back.</Text>
       </View>
       <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
-        <Text style={styles.confirmText}>Join Now</Text>
+        <Text style={styles.confirmText}>Leave The Event</Text>
       </TouchableOpacity>
     </View>
   );
@@ -139,4 +158,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventInfoScreen;
+export default EventJoined;

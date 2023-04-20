@@ -33,6 +33,20 @@ Content-Type: application/json
 
 ###
 
+POST http://localhost:5000/events/register 
+Content-Type: application/json
+
+{
+    "name": "Software Product Exposition",
+    "location": "Boston",
+    "date": "Apr 24 2023",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet enim tortor at auctor urna nunc id. Eget gravida cum sociis natoque. Sociis natoque penatibus et magnis. Natoque penatibus et magnis dis parturient montes nascetur. Turpis egestas maecenas pharetra convallis posuere morbi leo urna molestie. Non diam phasellus vestibulum lorem sed. Ridiculus mus mauris vitae ultricies leo integer malesuada nunc vel. Arcu dictum varius duis at consectetur lorem donec. Placerat duis ultricies lacus sed turpis tincidunt.",
+    "joinCode": "654321",
+    "imageSource": "https://spotme.com/wp-content/uploads/2021/03/virtual-product-launch-event-examples.jpg"
+}
+
+###
+
 PUT http://localhost:5000/proxi-users/update/%28774%29%20818-1234
 Content-Type: application/json
 

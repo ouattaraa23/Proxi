@@ -81,18 +81,33 @@ router.get("/event/:eventId", async (req, res) => {
   res.json(event);
 });
 
+// Getting an Event by Join Code
+router.get("/join-code/:joinCode", async (req, res) => {
+  try {
+    const event = await eventUser.findOne({ joinCode: req.params.joinCode });
+    if (!event) {
+      res.status(404).json({ message: "Event not found" });
+      return;
+    }
+    res.json(event);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Helper function to get a user by their ID
 async function getEventById(eventId) {
-    let event;
-  
-    try {
-      event = await eventUser.findById(eventId);
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
-  
-    return event;
+  let event;
+
+  try {
+    event = await eventUser.findById(eventId);
+  } catch (err) {
+    console.error(err);
+    return null;
   }
+
+  return event;
+}
 
 module.exports = router;

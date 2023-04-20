@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EventList from "./EventList";
 import EventInfoScreen from "./EventInfoScreen";
 import ConfirmProfile from "./ConfirmProfile";
+import EventJoined from "./EventJoined";
 
 const HomeTab = ({ navigation, phoneNumber }) => {
   const Stack = createStackNavigator();
@@ -18,6 +19,9 @@ const HomeTab = ({ navigation, phoneNumber }) => {
       </Stack.Screen>
       <Stack.Screen name="ConfirmProfile" options={{ headerShown: false }}>
         {(props) => <ConfirmProfile {...props} phoneNumber={phoneNumber} />}
+      </Stack.Screen>
+      <Stack.Screen name="EventJoined" options={{ headerShown: false }}>
+        {(props) => <EventJoined {...props} phoneNumber={phoneNumber} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

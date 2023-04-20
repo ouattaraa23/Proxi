@@ -3,26 +3,22 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
   Keyboard,
   TouchableWithoutFeedback,
-  Button,
-  Modal,
-  TouchableOpacity,
 } from "react-native";
 import { ScrollView } from "react-native";
 import axios from "axios";
+import { useFocusEffect } from "@react-navigation/native";
 
 import EventCard from "../tab-components/EventCard";
 
 const PastEventList = ({ navigation, phoneNumber }) => {
-  const [searchInput, setSearchInput] = useState("");
   const [user, setUser] = useState({});
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    const encodedNumber = encodeURIComponent(phoneNumber);
+  const encodedNumber = encodeURIComponent(phoneNumber);
 
+  useEffect(() => {
     axios
       .get(`http://10.110.153.30:5000/proxi-users/phoneNumber/${encodedNumber}`)
       .then((response) => {
@@ -33,6 +29,23 @@ const PastEventList = ({ navigation, phoneNumber }) => {
         console.error(error);
       });
   }, [phoneNumber]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(
+          `http://10.110.153.30:5000/proxi-users/phoneNumber/${encodedNumber}`
+        )
+        .then((response) => {
+          setUser(response.data);
+          fetchRegisteredEventDetails(response.data.pastEvents);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      return () => {}; // You can return a cleanup function if needed
+    }, [])
+  );
 
   if (!user) {
     return (
@@ -61,16 +74,13 @@ const PastEventList = ({ navigation, phoneNumber }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={[styles.container]}>
+        <Text style={[styles.subTitle, { paddingTop: 15, paddingBottom: 15, top: 35 }]}>
+          Past Events
+        </Text>
         <ScrollView
           style={[styles.eventContainer, { top: 30 }, { height: "100%" }]}
           showsHorizontalScrollIndicator={false}
         >
-          <Text
-            style={[styles.subTitle, { paddingTop: 15, paddingBottom: 15 }]}
-          >
-            Past Events
-          </Text>
-
           {events.map((event, index) => (
             <EventCard
               key={index}
