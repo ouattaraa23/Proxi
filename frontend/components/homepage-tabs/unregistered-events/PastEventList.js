@@ -74,7 +74,7 @@ const PastEventList = ({ navigation, phoneNumber }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={[styles.container]}>
-        <Text style={[styles.subTitle, { paddingTop: 15, paddingBottom: 15, top: 35 }]}>
+        <Text style={[styles.subTitle, { paddingTop: 20, paddingBottom: 15, top: 35 }]}>
           Past Events
         </Text>
         <ScrollView

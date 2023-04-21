@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CoolButton from "./tab-components/CoolButton";
@@ -54,11 +55,12 @@ const ConnectionInfoScreen = ({ navigation, route }) => {
         </View>
       </View>
 
-      <View style={styles.skillsContainer}>
+      <ScrollView 
+      contentContainerStyle={styles.skillsContainer}>
         {connection.skills.map((skill, index) => (
           <CoolButton key={index + 1} text={skill} />
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };

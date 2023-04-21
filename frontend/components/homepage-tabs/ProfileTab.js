@@ -74,11 +74,9 @@ const ProfileTab = ({ navigation, phoneNumber }) => {
 
       <Text>Skills:</Text>
       <View style={styles.skillsContainer}>
-        <View style={styles.skillsContainer}>
-          {skills.map((skill, index) => (
-            <CoolButton key={index + 1} text={skill} />
-          ))}
-        </View>
+        {skills.map((skill, index) => (
+          <CoolButton key={index + 1} text={skill} />
+        ))}
       </View>
     </View>
   );
@@ -119,6 +117,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: "60%",
     flexDirection: "row",
+    flexWrap: "wrap",
   },
   backButton: {
     position: "absolute",

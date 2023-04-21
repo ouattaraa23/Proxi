@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import PendingConnection from "./tab-components/PendingConnection";
 import ConnectionCard from "./tab-components/ConnectionCard";
+import { useFocusEffect } from "@react-navigation/native";
 
 import axios from "axios";
 
@@ -19,9 +20,9 @@ const ConnectionTab = ({ navigation, phoneNumber }) => {
   const [user, setUser] = useState(null);
   const [pendingConnectionsDetails, setPendingConnectionsDetails] = useState([]);
   const [connectionsDetails, setConnectionsDetails] = useState([]);
+  const encodedNumber = encodeURIComponent(phoneNumber);
 
   useEffect(() => {
-    const encodedNumber = encodeURIComponent(phoneNumber);
 
     axios
       .get(`http://10.110.153.30:5000/proxi-users/phoneNumber/${encodedNumber}`)
@@ -34,6 +35,22 @@ const ConnectionTab = ({ navigation, phoneNumber }) => {
         console.error(error);
       });
   }, [phoneNumber]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+      .get(`http://10.110.153.30:5000/proxi-users/phoneNumber/${encodedNumber}`)
+      .then((response) => {
+        setUser(response.data);
+        fetchPendingConnectionsDetails(response.data.pendingConnections);
+        fetchConnectionsDetails(response.data.connections);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      return () => {}; // You can return a cleanup function if needed
+    }, [])
+  );
 
   const fetchPendingConnectionsDetails = async (pendingConnectionsArray) => {
     const fetchedDetails = await Promise.all(

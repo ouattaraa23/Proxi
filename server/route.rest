@@ -47,6 +47,34 @@ Content-Type: application/json
 
 ###
 
+POST http://localhost:5000/events/register 
+Content-Type: application/json
+
+{
+    "name": "Amazon Web Fair",
+    "location": "Seattle, WA",
+    "date": "May 3 2023",
+    "description": "Elit ut aliquam purus sit. Id venenatis a condimentum vitae sapien pellentesque. Cras fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Elit eget gravida cum sociis natoque penatibus et magnis. Diam vel quam elementum pulvinar etiam non quam lacus suspendisse. Fermentum iaculis eu non diam phasellus vestibulum lorem. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Nisl vel pretium lectus quam id leo in. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Est ante in nibh mauris. In egestas erat imperdiet sed euismod nisi porta lorem mollis. Eget arcu dictum varius duis at consectetur lorem. Justo laoreet sit amet cursus sit amet. At quis risus sed vulputate odio ut enim blandit volutpat.",
+    "joinCode": "456123",
+    "imageSource": "https://www.the-sun.com/wp-content/uploads/sites/6/2022/02/NINTCHDBPICT000561981244.jpg?w=620"
+}
+
+###
+
+POST http://localhost:5000/events/register 
+Content-Type: application/json
+
+{
+    "name": "Google Career Event",
+    "location": "San Francisco, CA",
+    "date": "May 1 2023",
+    "description": "In pellentesque massa placerat duis ultricies lacus sed turpis tincidunt. Interdum consectetur libero id faucibus nisl tincidunt eget nullam. Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Eu consequat ac felis donec et. Tellus rutrum tellus pellentesque eu tincidunt. Phasellus vestibulum lorem sed risus. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Sit amet purus gravida quis blandit turpis. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Ipsum suspendisse ultrices gravida dictum fusce. Tristique magna sit amet purus gravida quis. Sed risus ultricies tristique nulla aliquet enim tortor. Varius sit amet mattis vulputate enim. Euismod in pellentesque massa placerat duis ultricies lacus sed. Suspendisse potenti nullam ac tortor vitae. Bibendum neque egestas congue quisque egestas diam in arcu. Justo eget magna fermentum iaculis eu non.",
+    "joinCode": "162534",
+    "imageSource": "https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png"
+}
+
+###
+
 PUT http://localhost:5000/proxi-users/update/%28774%29%20818-1234
 Content-Type: application/json
 
@@ -63,7 +91,7 @@ PUT http://localhost:5000/proxi-users/add-pending-connection/%28508%29%20615-746
 Content-Type: application/json
 
 {
-  "connectionId": "643ee527e3d9a18acdfa46ea"
+  "connectionId": "64418b27d126ddbac06a37bb"
 }
 
 ### Add an event to the registered list
@@ -106,7 +134,7 @@ PUT http://localhost:5000/proxi-users/add-connection/%28508%29%20615-7464
 Content-Type: application/json
 
 {
-  "connectionId": "643d3e841b8c63707d38ad68"
+  "connectionId": "6441871dd126ddbac06a36c1"
 }
 
 ### 
