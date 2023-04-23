@@ -19,6 +19,13 @@ I designed the mobile application using Expo and React-Native for the front-end 
 ## Starting the Application / Back-end
 
 1. cd into the server folder
-2. run npm devStart
+2. Install node.js, express.js, cors, and mongoose (npm install or whatever you choose)
+3. run npm devStart
 
 To simplify the Proxi mobile application, it is a medium-high fidelity prototype that allows the user to walk through the entire sign-up process.
+
+This project was done in collaboration with the Northeastern University class ENTR 3330: Design Thinking for Startups. Based on their specifications I fine tuned the UI to match the deisgn the had in mind and to the best of my abilities, I made certain features of the app funcational.
+
+Link to the Proxi - Mobile Applciation Figma Design: https://www.figma.com/file/RgV7E345Y8CMyNSwwxtF9y/PROXI-Prototype
+
+
